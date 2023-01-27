@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -28,9 +29,11 @@ public class Main {
         
         HashMap<String, Integer> wordFrequency = new HashMap<String, Integer>();
    
-
+        
     
         try {
+
+            int countofallwords = 0;
 
             String line = br.readLine();
             while (line != null) {
@@ -38,6 +41,11 @@ public class Main {
                     if (line == null) {
                         break;
                     }
+
+
+                String[] words = line.split("\\s+");
+                countofallwords += words.length;
+                System.out.println("The count of all words is: " + countofallwords);
 
                 line = line.replaceAll("\\.", "").toLowerCase();
                 line = line.replaceAll("\\,", "").toLowerCase();
@@ -51,6 +59,9 @@ public class Main {
                 line = line.replaceAll("\\'", "").toLowerCase();
                 line = line.replaceAll("\"\"", "").toLowerCase();
                 line = line.replaceAll("\\?", "").toLowerCase();
+
+                
+                
 
                 StringTokenizer stringtoken = new StringTokenizer(line);
                 while (stringtoken.hasMoreTokens()) {
@@ -77,7 +88,10 @@ public class Main {
     
             for (int i = 0; i < 10 && i < list.size(); i++) {
                 Map.Entry<String, Integer> entry = list.get(i);
-                System.out.println(entry.getKey() + ": the count of this word is " + entry.getValue());
+                DecimalFormat df = new DecimalFormat("#0.000");
+                // Float rating = Float.valueOf(entry.getValue() / countofallwords);
+                // System.out.println(entry.getKey() + ": the count of this word is " + (entry.getValue() / countofallwords));
+                System.out.println(entry.getKey() + ": the count of this word is " + df.format((entry.getValue())));
             }
 
 
