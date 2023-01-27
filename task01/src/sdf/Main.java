@@ -11,7 +11,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -22,8 +27,9 @@ public class Main {
         BufferedReader br = new BufferedReader(rnt);
         
         HashMap<String, Integer> wordFrequency = new HashMap<String, Integer>();
+   
 
-
+    
         try {
 
             String line = br.readLine();
@@ -59,6 +65,22 @@ public class Main {
                 }
 
             }
+        
+            List<Map.Entry<String, Integer>> list = new ArrayList<>(wordFrequency.entrySet());
+
+            Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+                @Override
+                public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
+                    return b.getValue() - a.getValue();
+                }
+            });
+    
+            for (int i = 0; i < 10 && i < list.size(); i++) {
+                Map.Entry<String, Integer> entry = list.get(i);
+                System.out.println(entry.getKey() + ": the count of this word is " + entry.getValue());
+            }
+
+
 
         } catch (IOException e) {
             System.out.println("Could not find file....");
@@ -67,16 +89,11 @@ public class Main {
 
         br.close();
 
-        for (String word : wordFrequency.keySet()) {
-            System.out.println(word + ": the count of this word is " + wordFrequency.get(word));
-        }
+        // checking to see that frequency is able to detect
+        // for (String word : wordFrequency.keySet()) {
+        //     System.out.println(word + ": the count of this word is " + wordFrequency.get(word));
+        // }
         
-
-
-
-
-
-
 
     }
 
